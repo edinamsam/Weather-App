@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/21f9334e0b.js" crossorigin="anonymous"></script>
+    <title>Weather app</title>
+</head>
+<body>
+    <div class="app">
+
+        <header class="header">
+            <div class="logo">
+                <img src="images/logo.svg" alt="">
+                <span>Weather Now</span>
+            </div>
+
+            <button class="unit-toggle">
+                <i class="fa-solid fa-gear"></i>
+                Units
+            </button>
+        </header>
+
+        <main class="main">
+            <h1 class="title">How's the sky looking today?</h1>
+            
+            <div class="search-box">
+                <input type="text" placeholder="Search for a place...">
+                <button>Search</button>
+            </div>
+
+            <section class="current-weather">
+                <div class="location">
+                    <h2>Berlin, Germany</h2>
+                    <p>Tuesday, Aug 5, 2025</p>
+                </div>
+
+                <div class="temperature">
+                    <img src="images/icon-sunny.webp" alt="">
+                    <span class="temp-value">68°</span>
+                </div>
+            </section>
+
+            <section class="stats">
+                <div class="stat-card">
+                    <p>Feels like</p>
+                    <h3>64°</h3>
+                </div>
+
+                <div class="stat-card">
+                    <p>Humidity</p>
+                    <h3>46%</h3>
+                </div>
+
+                <div class="stat-card">
+                    <p>Wind</p>
+                    <h3>9 mph</h3>
+                </div>
+
+                <div class="stat-card">
+                    <p>Precipitation</p>
+                    <h3>0 in</h3>
+                </div>
+            </section>
+
+            <section class="daily">
+                <h2>Daily forecast</h2>
+                <div class="daily-list">
+                    <div class="day-card">Tue<br>🌧 68° / 57°</div>
+                    <div class="day-card">Wed<br>🌧 70° / 59°</div>
+                    <div class="day-card">Thu<br>☀ 75° / 57°</div>
+                    <div class="day-card">Fri<br>⛅ 77° / 55°</div>
+                    <div class="day-card">Sat<br>⛈ 70° / 59°</div>
+                    <div class="day-card">Sun<br>🌧 77° / 61°</div>
+                    <div class="day-card">Mon<br>🌫 75° / 59°</div>
+                </div>
+            </section>
+
+            <section class="hourly">
+                <div class="hourly-header">
+                    <h2>Hourly forecast</h2>
+                    <button>Tuesday</button>
+                </div>
+
+                <div class="hourly-list">
+                    <div class="hour">3 PM <span>68°</span></div>
+                    <div class="hour">4 PM <span>68°</span></div>
+                    <div class="hour">5 PM <span>68°</span></div>
+                    <div class="hour">6 PM <span>66°</span></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
