@@ -9,6 +9,12 @@ const humidityEl = document.querySelector("[data-humidity]");
 const windEl = document.querySelector("[data-wind]");
 const precipEl = document.querySelector("[data-precip]");
 const dailyEl = document.querySelector("[data-daily]");
+const hourlyEl = document.querySelector("[data-hourly]");
+const unitToggle = document.querySelector(".unit-toggle");
+
+let weatherData = null;
+let currentLocation = null;
+let unit = "metric";
 
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -22,9 +28,13 @@ searchForm.addEventListener("submit", async (e) => {
   const data = await getCurrentWeather(location.lat, location.lon);
   if (!data) return;
 
+  weatherData = data;
+  currentLocation = location;
+
   renderCurrentWeather(location, data.current_weather);
   renderStats(data);
   renderDailyForecast(data);
+  renderHourlyForecast(data);
 
   searchInput.value = "";
 });
@@ -55,7 +65,7 @@ async function getCoordinates(city) {
 }
 
 async function getCurrentWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relativehumidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
 
   try {
     const response = await fetch(url);
@@ -74,7 +84,7 @@ async function getCurrentWeather(lat, lon) {
 
 function renderCurrentWeather(location, weather) {
   cityEl.textContent = `${location.name}, ${location.country}`;
-  tempEl.textContent = `${Math.round(weather.temperature)}°`;
+  tempEl.textContent = `${convertTemp(weather.temperature)}°`;
   dateEl.textContent = formatDate(weather.time);
   iconEl.src = getWeatherIcon(weather.weathercode);
 }
@@ -102,7 +112,7 @@ function getWeatherIcon(code) {
 function renderStats(data) {
   const current = data.current_weather;
 
-  feelsEl.textContent = `${Math.round(current.temperature)}°`;
+  feelsEl.textContent = `${convertTemp(current.temperature)}°`;
   windEl.textContent = `${Math.round(current.windspeed)} km/h`;
 
   //Use first hourly value as "current"
@@ -128,9 +138,52 @@ function renderDailyForecast(data) {
 
     card.innerHTML = `
     <span>${weekday}</span>
-    <span>${Math.round(maxTemps[index])}° / ${Math.round(minTemps[index])}°</span>
+    <span>${convertTemp(maxTemps[index])}° / ${convertTemp(minTemps[index])}°</span>
     `;
 
     dailyEl.appendChild(card);
   });
 }
+
+function renderHourlyForecast(data) {
+  hourlyEl.innerHTML = "";
+
+  const times = data.hourly.time;
+  const temps = data.hourly.temperature_2m;
+
+  //Show next 8 hours only
+  for (let i = 0; i < 8; i++) {
+    const date = new Date(times[i]);
+    const hour = date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+    });
+
+    const hourCard = document.createElement("div");
+    hourCard.className = "hour";
+
+    hourCard.innerHTML = `
+    <span>${hour}</span>
+    <strong>${convertTemp(temps[i])}°</strong>
+    `;
+
+    hourlyEl.appendChild(hourCard);
+  }
+}
+
+function convertTemp(temp) {
+  return unit === "metric" ? Math.round(temp) : Math.round((temp * 9) / 5 + 32);
+}
+
+unitToggle.addEventListener("click", () => {
+  if (!weatherData || !currentLocation) return;
+
+  unit = unit === "metric" ? "imperial" : "metric";
+
+  unitToggle.textContent = unit === "metric" ? "Units °C" : "Units °F";
+
+  //Re-render everything using stored data
+  renderCurrentWeather(currentLocation, weatherData.current_weather);
+  renderStats(weatherData);
+  renderDailyForecast(weatherData);
+  renderHourlyForecast(weatherData);
+});
