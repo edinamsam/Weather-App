@@ -8,6 +8,7 @@ const feelsEl = document.querySelector("[data-feels]");
 const humidityEl = document.querySelector("[data-humidity]");
 const windEl = document.querySelector("[data-wind]");
 const precipEl = document.querySelector("[data-precip]");
+const dailyEl = document.querySelector("[data-daily]");
 
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -23,6 +24,7 @@ searchForm.addEventListener("submit", async (e) => {
 
   renderCurrentWeather(location, data.current_weather);
   renderStats(data);
+  renderDailyForecast(data);
 
   searchInput.value = "";
 });
@@ -106,4 +108,29 @@ function renderStats(data) {
   //Use first hourly value as "current"
   humidityEl.textContent = `${data.hourly.relativehumidity_2m[0]}%`;
   precipEl.textContent = `${data.hourly.precipitation[0]} mm`;
+}
+
+function renderDailyForecast(data) {
+  dailyEl.innerHTML = "";
+
+  const days = data.daily.time;
+  const maxTemps = data.daily.temperature_2m_max;
+  const minTemps = data.daily.temperature_2m_min;
+
+  days.forEach((day, index) => {
+    const date = new Date(day);
+    const weekday = date.toLocaleDateString("en-US", {
+      weekday: "short",
+    });
+
+    const card = document.createElement("div");
+    card.className = "day-card";
+
+    card.innerHTML = `
+    <span>${weekday}</span>
+    <span>${Math.round(maxTemps[index])}° / ${Math.round(minTemps[index])}°</span>
+    `;
+
+    dailyEl.appendChild(card);
+  });
 }
