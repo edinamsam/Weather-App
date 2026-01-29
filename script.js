@@ -11,13 +11,34 @@ const precipEl = document.querySelector("[data-precip]");
 const dailyEl = document.querySelector("[data-daily]");
 const hourlyEl = document.querySelector("[data-hourly]");
 const unitToggle = document.querySelector(".unit-toggle");
+const loadingEl = document.querySelector(".loading");
+const errorEl = document.querySelector(".error");
 
 let weatherData = null;
 let currentLocation = null;
 let unit = "metric";
 
+function showLoading() {
+  loadingEl.classList.remove("hidden");
+}
+
+function hideLoading() {
+  loadingEl.classList.add("hidden");
+}
+
+function showError(message) {
+  errorEl.textContent = message;
+  errorEl.classList.remove("hidden");
+}
+
+function clearError() {
+  errorEl.classList.add("hidden");
+}
+
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  clearError();
 
   const query = searchInput.value.trim();
   if (!query) return;
@@ -25,8 +46,13 @@ searchForm.addEventListener("submit", async (e) => {
   const location = await getCoordinates(query);
   if (!location) return;
 
+  showLoading();
+
   const data = await getCurrentWeather(location.lat, location.lon);
-  if (!data) return;
+  if (!data) {
+    hideLoading();
+    return;
+  }
 
   weatherData = data;
   currentLocation = location;
@@ -36,6 +62,7 @@ searchForm.addEventListener("submit", async (e) => {
   renderDailyForecast(data);
   renderHourlyForecast(data);
 
+  hideLoading();
   searchInput.value = "";
 });
 
@@ -60,7 +87,7 @@ async function getCoordinates(city) {
     };
   } catch (error) {
     console.error(error.message);
-    alert("Location not found. Please try another city");
+    showError("City not found. Try another.");
   }
 }
 
@@ -78,7 +105,7 @@ async function getCurrentWeather(lat, lon) {
     return data;
   } catch (error) {
     console.error(error.message);
-    alert("Unable to fetch weather data.");
+    showError("Unable to fetch weather data.");
   }
 }
 
@@ -186,4 +213,20 @@ unitToggle.addEventListener("click", () => {
   renderStats(weatherData);
   renderDailyForecast(weatherData);
   renderHourlyForecast(weatherData);
+});
+
+window.addEventListener("load", async () => {
+  const location = await getCoordinates("Berlin");
+  if (!location) return;
+
+  const data = await getCurrentWeather(location.lat, location.lon);
+  if (!data) return;
+
+  weatherData = data;
+  currentLocation = location;
+
+  renderCurrentWeather(location, data.current_weather);
+  renderStats(data);
+  renderDailyForecast(data);
+  renderHourlyForecast(data);
 });

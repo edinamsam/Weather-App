@@ -11,6 +11,16 @@ body {
     color: white;
 }
 
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
 .daily-list {
     display: flex;
 }

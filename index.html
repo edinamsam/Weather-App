@@ -23,12 +23,16 @@
         </header>
 
         <main class="main">
+            <p class="loading hidden">Loading weather...</p>
+             
             <h1 class="title">How's the sky looking today?</h1>
             
             <form class="search-box">
                 <input type="text" placeholder="Search for a place..." aria-label="Search for a place">
                 <button type="submit">Search</button>
             </form>
+
+            <p class="error hidden"></p>
 
             <section class="current-weather">
                 <div class="location">
