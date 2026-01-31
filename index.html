@@ -13,7 +13,6 @@
         <header class="header">
             <div class="logo">
                 <img src="images/logo.svg" alt="">
-                <span>Weather Now</span>
             </div>
 
             <button class="unit-toggle">
@@ -23,64 +22,69 @@
         </header>
 
         <main class="main">
-            <p class="loading hidden">Loading weather...</p>
-             
-            <h1 class="title">How's the sky looking today?</h1>
-            
-            <form class="search-box">
-                <input type="text" placeholder="Search for a place..." aria-label="Search for a place">
-                <button type="submit">Search</button>
-            </form>
-
-            <p class="error hidden"></p>
-
-            <section class="current-weather">
-                <div class="location">
-                    <h2 data-city>Berlin, Germany</h2>
-                    <p data-date>Tuesday, Aug 5, 2025</p>
-                </div>
-
-                <div class="temperature">
-                    <img data-weather-icon src="images/icon-sunny.webp" alt="">
-                    <span data-temp class="temp-value">68°</span>
-                </div>
+            <section class="intro">
+                <p class="loading hidden">Loading weather...</p>
+                
+                <h1 class="title">How's the sky looking today?</h1>
+                
+                <form class="search-box">
+                    <input type="text" placeholder="Search for a place..." aria-label="Search for a place">
+                    <button type="submit">Search</button>
+                </form>
+                
+                <p class="error hidden"></p>
             </section>
 
-            <section class="stats">
-                <div class="stat-card">
-                    <p>Feels like</p>
-                    <h3 data-feels>64°</h3>
-                </div>
+            <div class="grid-container">
+                <section class="current-weather">
+                    <div class="location">
+                        <h2 data-city>Berlin, Germany</h2>
+                        <p data-date>Tuesday, Aug 5, 2025</p>
+                    </div>
+                
+                    <div class="temperature">
+                        <img data-weather-icon src="images/icon-sunny.webp" alt="">
+                        <span data-temp class="temp-value">68°</span>
+                    </div>
+                </section>
+                
+                <section class="stats">
+                    <div class="stat-card">
+                        <p>Feels like</p>
+                        <h3 data-feels>64°</h3>
+                    </div>
+                
+                    <div class="stat-card">
+                        <p>Humidity</p>
+                        <h3 data-humidity>46%</h3>
+                    </div>
+                
+                    <div class="stat-card">
+                        <p>Wind</p>
+                        <h3 data-wind>9 mph</h3>
+                    </div>
+                
+                    <div class="stat-card">
+                        <p>Precipitation</p>
+                        <h3 data-precip>0 in</h3>
+                    </div>
+                </section>
+                
+                <section class="daily">
+                    <h2>Daily forecast</h2>
+                    <div class="daily-list" data-daily></div>
+                </section>
+                
+                <section class="hourly">
+                    <div class="hourly-header">
+                        <h2>Hourly forecast</h2>
+                        <button>Today</button>
+                    </div>
+                
+                    <div class="hourly-list" data-hourly></div>
+                </section>
+            </div>
 
-                <div class="stat-card">
-                    <p>Humidity</p>
-                    <h3 data-humidity>46%</h3>
-                </div>
-
-                <div class="stat-card">
-                    <p>Wind</p>
-                    <h3 data-wind>9 mph</h3>
-                </div>
-
-                <div class="stat-card">
-                    <p>Precipitation</p>
-                    <h3 data-precip>0 in</h3>
-                </div>
-            </section>
-
-            <section class="daily">
-                <h2>Daily forecast</h2>
-                <div class="daily-list" data-daily></div>
-            </section>
-
-            <section class="hourly">
-                <div class="hourly-header">
-                    <h2>Hourly forecast</h2>
-                    <button>Today</button>
-                </div>
-
-                <div class="hourly-list" data-hourly></div>
-            </section>
         </main>
     </div>
     <script src="script.js"></script>

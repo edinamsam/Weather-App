@@ -165,7 +165,9 @@ function renderDailyForecast(data) {
 
     card.innerHTML = `
     <span>${weekday}</span>
-    <span>${convertTemp(maxTemps[index])}° / ${convertTemp(minTemps[index])}°</span>
+    <div>
+    <span>${convertTemp(maxTemps[index])}°</span> <span>${convertTemp(minTemps[index])}°</span>
+    </div>
     `;
 
     dailyEl.appendChild(card);
