@@ -2,14 +2,16 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    outline: 1px solid red;
 }
 
 body {
-    min-height: 100vh;
+    min-height: 100dvh;
     background: radial-gradient(circle at top, #1a1f4a, #05061a);
     font-family: system-ui, sans-serif;
     color: white;
     padding: 30px 60px;
+    overflow-x: hidden;
 }
 
 .header {
@@ -40,6 +42,7 @@ body {
     display: flex;
     gap: 0.4rem;
     height: 30px;
+    width: 100%;
 }
 
 .search-box input,
@@ -48,7 +51,9 @@ body {
 }
 
 .search-box input {
-    width: 250px;
+    /*width: 250px;*/
+    flex: 1;
+    min-width: 0;
     background: rgba(255, 255, 255, 0.15);
 }
 
@@ -57,7 +62,8 @@ body {
 }*/
 
 .search-box button {
-    width: 60px;
+    /*width: 60px;*/
+    flex-shrink: 0;
 }
 
 .loading {
@@ -68,6 +74,10 @@ body {
 
 .hidden {
     display: none;
+}
+
+.main {
+    width: 100%;
 }
 
 .grid-container {
@@ -84,11 +94,14 @@ body {
 .current-weather {
     background-image: url(/images/bg-today-large.svg);
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     grid-area: current;
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 220px;
+    min-width: 0;
     padding: 0 70px 0 20px;
     border-radius: 10px;
 }
@@ -98,13 +111,13 @@ body {
     justify-content: space-between;
     gap: 2rem;
     align-items: center;
-    width: 125px;
+    min-width: 0;
     font-size: clamp(3rem, 6vw, 4.5rem);
 }
 
 .temperature img {
     height: 50px;
-    width: 50px;
+    min-width: 0px;
 }
 
 .stats {
@@ -112,6 +125,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.75rem;
+    min-width: 0;
 }
 
 .stat-card {
@@ -183,6 +197,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .body {
+        padding: 16px;
+    }
+
     .grid-container {
         grid-template-columns: 1fr;
         grid-template-areas: 
