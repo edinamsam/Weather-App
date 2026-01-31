@@ -197,7 +197,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .body {
+    body {
         padding: 16px;
     }
 
