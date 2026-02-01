@@ -92,7 +92,7 @@ async function getCoordinates(city) {
 }
 
 async function getCurrentWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
 
   try {
     const response = await fetch(url);
@@ -153,6 +153,7 @@ function renderDailyForecast(data) {
   const days = data.daily.time;
   const maxTemps = data.daily.temperature_2m_max;
   const minTemps = data.daily.temperature_2m_min;
+  const codes = data.daily.weathercode;
 
   days.forEach((day, index) => {
     const date = new Date(day);
@@ -165,6 +166,7 @@ function renderDailyForecast(data) {
 
     card.innerHTML = `
     <span>${weekday}</span>
+    <img class="weather-img-daily" src="${getWeatherIcon(codes[index])}"/>
     <div>
     <span>${convertTemp(maxTemps[index])}°</span> <span>${convertTemp(minTemps[index])}°</span>
     </div>

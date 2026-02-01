@@ -173,6 +173,11 @@ body {
     gap: 10px;
 }
 
+.weather-img-daily {
+    width: 40px;
+    height: 40px;
+}
+
 .hourly {
     grid-area: hourly;
     background: rgba(255, 255, 255, 0.15);
