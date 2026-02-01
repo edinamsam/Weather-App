@@ -42,6 +42,7 @@ body {
     gap: 0.4rem;
     height: 30px;
     width: 100%;
+    max-width: 600px;
 }
 
 .search-box input,
@@ -207,6 +208,11 @@ body {
     justify-content: space-between;
     padding: 5px;
     border-radius: 5px;
+}
+
+.weather-img-hourly {
+    width: 40px;
+    height: 40px;
 }
 
 @media (max-width: 768px) {

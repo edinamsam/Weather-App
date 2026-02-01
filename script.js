@@ -92,7 +92,7 @@ async function getCoordinates(city) {
 }
 
 async function getCurrentWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,precipitation,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
 
   try {
     const response = await fetch(url);
@@ -181,6 +181,7 @@ function renderHourlyForecast(data) {
 
   const times = data.hourly.time;
   const temps = data.hourly.temperature_2m;
+  let codes = data.hourly.weathercode;
 
   //Show next 8 hours only
   for (let i = 0; i < 8; i++) {
@@ -194,6 +195,7 @@ function renderHourlyForecast(data) {
 
     hourCard.innerHTML = `
     <span>${hour}</span>
+    <img class="weather-img-hourly" src="${getWeatherIcon(codes[i])}"/>
     <strong>${convertTemp(temps[i])}°</strong>
     `;
 
