@@ -54,6 +54,8 @@ body {
     flex: 1;
     min-width: 0;
     background: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 5px;
 }
 
 /*[placeholder="Search for place..."] {
@@ -61,8 +63,14 @@ body {
 }*/
 
 .search-box button {
-    /*width: 60px;*/
     flex-shrink: 0;
+    background: rgba(75, 116, 227, 0.542);
+    color: white;
+    padding: 7px;
+}
+
+.search-box button:hover {
+    cursor: pointer;
 }
 
 .loading {
